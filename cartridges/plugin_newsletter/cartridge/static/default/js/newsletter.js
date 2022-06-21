@@ -91,10 +91,10 @@
 "use strict";
 
 
-var processInclude = __webpack_require__(1);
+var processInclude = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module 'base/util'"); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
 
 $(document).ready(function () {
-    processInclude(__webpack_require__(2));
+    processInclude(__webpack_require__(1));
 });
 
 
@@ -105,27 +105,7 @@ $(document).ready(function () {
 "use strict";
 
 
-module.exports = function (include) {
-    if (typeof include === 'function') {
-        include();
-    } else if (typeof include === 'object') {
-        Object.keys(include).forEach(function (key) {
-            if (typeof include[key] === 'function') {
-                include[key]();
-            }
-        });
-    }
-};
-
-
-/***/ }),
-/* 2 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var formValidation = __webpack_require__(3);
+var formValidation = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module 'base/components/formValidation'"); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
 
 module.exports = {
     newsletter: function () {
@@ -157,56 +137,6 @@ module.exports = {
             });
             return false;
         });
-    }
-};
-
-
-/***/ }),
-/* 3 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-/**
- * Remove all validation. Should be called every time before revalidating form
- * @param {element} form - Form to be cleared
- * @returns {void}
- */
-function clearFormErrors(form) {
-    $(form).find('.form-control.is-invalid').removeClass('is-invalid');
-}
-
-module.exports = function (formElement, payload) {
-    // clear form validation first
-    clearFormErrors(formElement);
-    $('.alert', formElement).remove();
-
-    if (typeof payload === 'object' && payload.fields) {
-        Object.keys(payload.fields).forEach(function (key) {
-            if (payload.fields[key]) {
-                var feedbackElement = $(formElement).find('[name="' + key + '"]')
-                    .parent()
-                    .children('.invalid-feedback');
-
-                if (feedbackElement.length > 0) {
-                    if (Array.isArray(payload[key])) {
-                        feedbackElement.html(payload.fields[key].join('<br/>'));
-                    } else {
-                        feedbackElement.html(payload.fields[key]);
-                    }
-                    feedbackElement.siblings('.form-control').addClass('is-invalid');
-                }
-            }
-        });
-    }
-    if (payload && payload.error) {
-        var form = $(formElement).prop('tagName') === 'FORM'
-            ? $(formElement)
-            : $(formElement).parents('form');
-
-        form.prepend('<div class="alert alert-danger">'
-            + payload.error.join('<br/>') + '</div>');
     }
 };
 
